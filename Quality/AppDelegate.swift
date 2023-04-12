@@ -14,6 +14,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     static private(set) var instance: AppDelegate! = nil
     private var outputDevices: OutputDevices!
     private let defaults = Defaults.shared
+    private var networkServer: NetworkServer!
     
     var statusItem: NSStatusItem?
     
@@ -51,6 +52,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         AppDelegate.instance = self
         outputDevices = OutputDevices()
+        networkServer = NetworkServer(outputDevices)
         
         checkPermissions()
         
@@ -65,6 +67,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         menu.addItem(NSMenuItem.separator())
         
+        let setSampleRateItem = NSMenuItem(title: "Set Rate to Detected", action: #selector(setDeviceSampleRate), keyEquivalent: "")
+        menu.addItem(setSampleRateItem)
+        
+        let enableAutoSwitchItem = NSMenuItem(title: "Auto Switching", action: #selector(toggleAutoSwitching(item:)), keyEquivalent: "")
+        menu.addItem(enableAutoSwitchItem)
+        enableAutoSwitchItem.state = defaults.userPreferAutoSwitch ? .on : .off
+        
         let showSampleRateItem = NSMenuItem(title: defaults.statusBarItemTitle, action: #selector(toggleSampleRate(item:)), keyEquivalent: "")
         menu.addItem(showSampleRateItem)
         
@@ -75,6 +84,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.statusItem?.menu = menu
         self.statusItem?.button?.title = "Loading..."
         self.statusItemDisplay()
+        
+        networkServer.startListener()
     }
     
     func statusItemDisplay() {
@@ -92,6 +103,30 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         defaults.userPreferIconStatusBarItem = !defaults.userPreferIconStatusBarItem
         self.statusItemDisplay()
         item.title = defaults.statusBarItemTitle
+    }
+    
+    @objc func toggleAutoSwitching(item: NSMenuItem) {
+        Task {
+            defaults.setPreferAutoSwitch(newValue: !defaults.userPreferAutoSwitch)
+            item.state = defaults.userPreferAutoSwitch ? .on : .off
+        }
+    }
+    
+    func updateAutoSwitchingMenuItemState() {
+        if let menu = statusItem?.menu,
+           let enableAutoSwitchItem = menu.item(withTitle: "Auto Switching") {
+            enableAutoSwitchItem.state = outputDevices.enableAutoSwitch ? .on : .off
+        }
+    }
+    
+    func updateClients() {
+        if let networkServer = self.networkServer {
+            networkServer.updateClients()
+        }
+    }
+    
+    @objc func setDeviceSampleRate() {
+        outputDevices.setDeviceSampleRate(nil)
     }
     
 }
