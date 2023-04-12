@@ -15,7 +15,6 @@ class NetworkServer {
     private let defaults = Defaults.shared
     private let hostName = (SCDynamicStoreCopyComputerName(nil, nil) as String?) ?? "Unknown"
     private var listener: NWListener?
-    //private var lastConnection: NWConnection?
     private var clientConnections: [NWConnection] = []
     
     init(_ outputDevices: OutputDevices) {
@@ -87,8 +86,6 @@ class NetworkServer {
     }
 
     func processClientMessage(_ clientMessage: ClientMessage, connection: NWConnection) {
-        //let dispatchGroup = DispatchGroup()
-        
         switch clientMessage.request {
         case .refresh:
             self.sendServerResponse(self.getResponseData(), connection: connection)
@@ -98,8 +95,6 @@ class NetworkServer {
             AppDelegate.instance.updateAutoSwitchingMenuItemState()
             break
         case .setDeviceSampleRate(let sampleRate):
-            //dispatchGroup.enter()
-            //outputDevices.setDeviceSampleRate(sampleRate, dispatchGroup: dispatchGroup)
             outputDevices.setDeviceSampleRate(sampleRate)
             break
         }
@@ -107,13 +102,6 @@ class NetworkServer {
         // Call receiveClientMessage(connection:) again to continue listening for messages
         self.receiveClientMessage(connection: connection)
 
-        /*
-        dispatchGroup.notify(queue: .main) {
-            self.sendServerResponse(self.getResponseData(), connection: connection)
-            // Call receiveClientMessage(connection:) again to continue listening for messages
-            self.receiveClientMessage(connection: connection)
-        }
-         */
     }
     
     func getResponseData() -> ServerResponse {
@@ -147,17 +135,6 @@ class NetworkServer {
         }
     }
     
-    /*
-    func updateClient() {
-        //TODO maintain list of all previous connections and send to any that are still .ready
-        //This is only a good intention update, client may no longer be active
-        guard let connection = lastConnection else { return }
-        if connection.state == .ready {
-            sendServerResponse(getResponseData(), connection: connection)
-        }
-    }
-     */
-        
     func sendServerResponse(_ response: ServerResponse, connection: NWConnection) {
         do {
             let data = try JSONEncoder().encode(response)

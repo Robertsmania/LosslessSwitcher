@@ -104,20 +104,6 @@ class OutputDevices: ObservableObject {
         }
     }
     
-    /*
-    func setDeviceSampleRate(_ sampleRate: Float64?, dispatchGroup: DispatchGroup? = nil) {
-        if let targetSampleRate = sampleRate ?? lastNearestSampleRate {
-            if targetSampleRate > 1000 {
-                if defaultOutputDevice?.nominalSampleRate != targetSampleRate {
-                    //print("Setting device sample rate to \(targetSampleRate)")
-                    defaultOutputDevice?.setNominalSampleRate(targetSampleRate)
-                }
-                updateSampleRate(targetSampleRate, force: true, dispatchGroup: dispatchGroup)
-            }
-        }
-    }
-     */
-    
     func setDeviceSampleRate(_ sampleRate: Float64?) {
         if let targetSampleRate = sampleRate ?? lastNearestSampleRate {
             if targetSampleRate > 1000 {
@@ -149,29 +135,6 @@ class OutputDevices: ObservableObject {
             delegate?.statusItemTitle = String(format: "C:%.1f | D:%.1f kHz", readableCurrentSampleRate, readableDetectedSampleRate)
         }
     }
-    
-    /*
-    func updateSampleRate(_ sampleRate: Float64, force: Bool = false, dispatchGroup: DispatchGroup? = nil) {
-        DispatchQueue.main.async {
-            let readableSampleRate = sampleRate / 1000
-            if self.enableAutoSwitch || force {
-                self.currentSampleRate = readableSampleRate
-            }
-            let detectedSampleRate = self.lastNearestSampleRate ?? 1.0
-            let readableCurrentSampleRate = self.currentSampleRate ?? detectedSampleRate / 1000
-            let readableDetectedSampleRate = detectedSampleRate / 1000
-            if self.detectedSampleRate != readableSampleRate
-            {
-                self.detectedSampleRate = readableDetectedSampleRate
-                AppDelegate.instance.updateClients()
-            }
-            
-            let delegate = AppDelegate.instance
-            delegate?.statusItemTitle = String(format: "C:%.1f | D:%.1f kHz", readableCurrentSampleRate, readableDetectedSampleRate)
-            dispatchGroup?.leave()
-        }
-    }
-     */
     
     func updateSupportedSampleRates() {
         if let device = defaultOutputDevice, let rates = device.nominalSampleRates {
