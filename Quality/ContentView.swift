@@ -15,8 +15,13 @@ struct ContentView: View {
     var body: some View {
         VStack {
             if let currentSampleRate = outputDevices.currentSampleRate {
-                let formattedSampleRate = String(format: "%.1f kHz", currentSampleRate)
+                let formattedSampleRate = String(format: "C: %.1f kHz", currentSampleRate)
                 Text(formattedSampleRate)
+                    .font(.system(size: 23, weight: .semibold, design: .default))
+            }
+            if let detectedSampleRate = outputDevices.detectedSampleRate {
+                let formattedDetectedSampleRate = String(format: "D: %.1f kHz", detectedSampleRate)
+                Text(formattedDetectedSampleRate)
                     .font(.system(size: 23, weight: .semibold, design: .default))
             }
             if let device = outputDevices.defaultOutputDevice {
