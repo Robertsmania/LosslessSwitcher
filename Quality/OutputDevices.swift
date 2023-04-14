@@ -128,8 +128,8 @@ class OutputDevices: ObservableObject {
             if self.detectedSampleRate != readableSampleRate
             {
                 self.detectedSampleRate = readableDetectedSampleRate
-                AppDelegate.instance.updateClients()
             }
+            AppDelegate.instance.updateClients()
             
             let delegate = AppDelegate.instance
             delegate?.statusItemTitle = String(format: "C:%.1f | D:%.1f kHz", readableCurrentSampleRate, readableDetectedSampleRate)
