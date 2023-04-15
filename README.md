@@ -4,23 +4,38 @@
 </p>
 
 #  
+This is a fork of the LosslessSwitcher project:
+https://github.com/vincentneo/LosslessSwitcher
 
-LosslessSwitcher switches your current audio device's sample rate to match the currently playing lossless song on your Apple Music app, automatically.
+The version here presetns a Bonjour network listener and allows clients to connect for remote control.  The iOS companion app LosslessSwitcherRemote can be found here:
+https://github.com/Robertsmania/LosslessSwitcherRemote
 
-Let's say if the next song that you are playing, is a Hi-Res Lossless track with a sample rate of 192kHz, LosslessSwitcher will switch your device to that sample rate as soon as possible. 
+In addition to the network support, this version of the macOS LosslessSwitcher has a few functional changes as well:
+Both the Connected (C:) and Detected (D:) frequencies are shown in the menubar and dropdown.
+The menu has a new option to "Set Rate to Detected".
+A toggle option for "Auto switching" is also shown.
 
-The opposite happens, when the next track happens to have a lower sample rate. 
+<img width="252" alt="app screenshot, with new display elements for Current and Detected frequencies, Set Rate to Current and Auto Swithing toggle" src="https://user-images.githubusercontent.com/11642124/231385169-37cf4e14-ae31-4cdb-87bb-5fb66aaa263b.png">
 
 ## Installation
-Simply go to the Releases page of this repository. [(Link to latest release)](https://github.com/vincentneo/LosslessSwitcher/releases/latest)
+Simply go to the Releases page of this repository. [(Link to latest release)](https://github.com/robertsmania/LosslessSwitcher/releases/latest)
 
-### Alternatively, try the beta! [(link)](https://github.com/vincentneo/LosslessSwitcher/releases/)
+### Alternatively, try the beta! [(link)](https://github.com/robertsmania/LosslessSwitcher/releases/)
 
 Drag the app to your Applications folder. If you wish to have it running when logging in, you should be able to add LosslessSwitcher in System Preferences:
 
 ```
 > User & Groups > Login Items > Add LosslessSwitcher app
 ``` 
+
+Below is the README from the source project:
+-----
+
+LosslessSwitcher switches your current audio device's sample rate to match the currently playing lossless song on your Apple Music app, automatically.
+
+Let's say if the next song that you are playing, is a Hi-Res Lossless track with a sample rate of 192kHz, LosslessSwitcher will switch your device to that sample rate as soon as possible. 
+
+The opposite happens, when the next track happens to have a lower sample rate. 
 
 ## App details
 
