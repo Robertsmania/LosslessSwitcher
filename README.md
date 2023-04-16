@@ -11,7 +11,7 @@ The version here presetns a Bonjour network listener and allows clients to conne
 https://github.com/Robertsmania/LosslessSwitcherRemote
 
 In addition to the network support, this version of the macOS LosslessSwitcher has a few functional changes as well:
-Both the Connected (C:) and Detected (D:) frequencies are shown in the menubar and dropdown.
+Both the Current (C:) and Detected (D:) frequencies are shown in the menubar and dropdown.
 The menu has a new option to "Set Rate to Detected".
 A toggle option for "Auto switching" is also shown.
 
